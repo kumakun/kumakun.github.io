@@ -8,13 +8,12 @@ $(function() {
     var Blogs = Parse.Collection.extend({model:Blog});
     var blogs = new Blogs();
 
-    var BlogsView = Parse.View.extend({
-      template: Handlebars.compile($('#blogs-tpl').html()),
-      render:function(){
-        var collction = {blog: this.collction.toJSON()};
-        this.$el.html(this.template(collction));
-      }
-    })
+    var BlogsView =  Parse.View.extend({
+    template: Handlebars.compile($('#blogs-tpl').html()),
+    render: function(){
+        var collection = { blog: this.collection.toJSON() };
+        this.$el.html(this.template(collection));
+    }});
 
     blogs.fetch({
     success: function(blogs) {
