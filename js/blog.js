@@ -8,13 +8,25 @@ $(function() {
     var Blogs = Parse.Collection.extend({model:Blog});
     var blogs = new Blogs();
 
+    var BlogsView = Parse.View.extend({
+      template: Handlebars.compile($('#blogs-tpl').html()),
+      render:function(){
+        var collction = {blog: this.collction.toJSON()};
+        this.$el.html(this.template(collction));
+      }
+    })
+
     blogs.fetch({
     success: function(blogs) {
-        console.log(blogs);
+        var blogsView = new BlogsView({ collection: blogs });
+        blogsView.render();
+        $('.main-container').html(blogsView.el);
     },
     error: function(blogs, error) {
         console.log(error);
     }
+
+
 });
 
 });
